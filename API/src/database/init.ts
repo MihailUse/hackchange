@@ -1,32 +1,18 @@
 import { User } from "./models/User";
-import { RoomUser } from "./models/RoomUser";
-import { Room } from "./models/Room";
-import { Permission } from "./models/Permission";
-import { Massage } from "./models/Massage";
+import { Comment } from "./models/Comment";
+import { Follower } from "./models/Follower";
+import { Like } from "./models/Like";
+import { Publication } from "./models/Publication";
+import { Tool } from "./models/Tool";
 
 Permission.hasMany(RoomUser, {
     foreignKey: 'permissionId'
 });
 
-User.hasMany(Massage, {
-    foreignKey: 'userId'
-});
-
-Massage.hasMany(Room, {
-    foreignKey: 'roomId'
-});
-
-Room.hasMany(RoomUser, {
-    foreignKey: 'roomId'
-});
-
-User.hasMany(RoomUser, {
-    foreignKey: 'userId'
-});
-
 
 User.sync({ alter: true });
-RoomUser.sync({ alter: true });
-Room.sync({ alter: true });
-Permission.sync({ alter: true });
-Massage.sync({ alter: true });
+Comment.sync({ alter: true });
+Follower.sync({ alter: true });
+Like.sync({ alter: true });
+Publication.sync({ alter: true });
+Tool.sync({ alter: true });
