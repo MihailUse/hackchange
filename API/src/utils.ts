@@ -1,6 +1,7 @@
+import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { ApplicationError } from "./router/ApplicationError";
-import jwt from "jsonwebtoken";
+import { User } from "./database/models/User";
 
 export enum HTTPStatus {
     SUCCESS = 200,
@@ -20,7 +21,7 @@ export interface ValidateJWTResponse {
     exp: number;
 }
 
-async function validateJwt(options: { token: string }) {
+async function validateJwtToken(options: { token: string }) {
     try {
         const { token } = options;
 
@@ -60,19 +61,19 @@ async function validateJwt(options: { token: string }) {
     }
 }
 
-export default async function validateJWT(
+async function validateJWT(
     req: Request,
     res: Response,
     next: NextFunction
 ) {
     try {
         const token = req?.headers?.authorization?.split(" ")[1];
-        
+
         if (!token) {
-            throw new ApplicationError(HTTPStatus.NOT_FOUND ,"Token not defined");
+            throw new ApplicationError(HTTPStatus.NOT_FOUND, "Token not defined");
         }
 
-        const response: ValidateJWTResponse = await validateJwt({
+        const response: ValidateJWTResponse = await validateJwtToken({
             token: token,
         });
 
