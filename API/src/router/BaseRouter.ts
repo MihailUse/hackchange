@@ -7,18 +7,16 @@ import { HTTPStatus } from "../utils";
 export default abstract class BaseRouter {
     public router: Router = express.Router();
 
-    protected failable(f: (req: Request, res: Response) => Promise<any>) {
+    protected failable(func: (req: Request, res: Response) => Promise<any>) {
         return async function (req: Request, res: Response) {
             try {
-                await f(req, res);
-            } catch (e) {
-                console.error("error", e);
-                if (e instanceof ApplicationError) {
-                    res.status(e.status).json({ message: e.message });
-                } else if (JSON.stringify(e) === "{}") {
-                    res.status(HTTPStatus.INTERNAL).json({ message: e.message });
+                await func(req, res);
+            } catch (err) {
+                console.error("error", err);
+                if (err instanceof ApplicationError) {
+                    res.status(err.status).json({ message: err.message });
                 } else {
-                    res.status(HTTPStatus.INTERNAL).json({ message: e });
+                    res.status(HTTPStatus.INTERNAL).json({ message: err });
                 }
             }
         };
