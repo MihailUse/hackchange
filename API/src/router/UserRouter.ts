@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { DAL } from "../database/DAL";
 import { User } from "../database/models/User";
 import BaseRouter from "./BaseRouter";
+import { validateJWT } from "../utils";
 
 
 export default class ApiRouter extends BaseRouter {
@@ -11,10 +12,26 @@ export default class ApiRouter extends BaseRouter {
     }
 
     private initRoutes(): void {
-        this.RegisterPostRoute("/user", this.getUser.bind(this));
-        this.RegisterPostRoute("/create", this.createUser.bind(this));
-        this.RegisterPostRoute("/edit", this.editUser.bind(this));
-        this.RegisterPostRoute("/delate", this.delateUser.bind(this));
+        this.RegisterPostRoute("/get", this.getUser.bind(this), validateJWT);
+        this.RegisterPostRoute("/create", this.createUser.bind(this), validateJWT);
+        this.RegisterPostRoute("/edit", this.editUser.bind(this), validateJWT);
+        this.RegisterPostRoute("/delate", this.delateUser.bind(this), validateJWT);
+    }
+
+    private async sungUp(req: Request, res: Response): Promise<void> {
+        const { newUser } = req.body;
+
+        const user: User = await User.create({ ...newUser });
+
+        res.json({ user });
+    }
+
+    private async sungIn(req: Request, res: Response): Promise<void> {
+        const { userId } = req.body;
+
+        const user: User = await User.findByPk(userId);
+
+        res.json({ user });
     }
 
     private async getUser(req: Request, res: Response): Promise<void> {
