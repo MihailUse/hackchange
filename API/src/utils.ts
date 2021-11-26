@@ -61,7 +61,7 @@ async function validateJwtToken(options: { token: string }) {
     }
 }
 
-async function validateJWT(
+export async function validateJWT(
     req: Request,
     res: Response,
     next: NextFunction
