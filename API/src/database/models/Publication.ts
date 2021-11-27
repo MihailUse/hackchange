@@ -55,6 +55,7 @@ Publication.init({
     },
     authorId: {
         type: DataTypes.BIGINT,
+        primaryKey: true,
         allowNull: false
     },
     toolId: {

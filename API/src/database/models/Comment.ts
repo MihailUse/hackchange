@@ -34,7 +34,8 @@ Comment.init({
         allowNull: false
     },
     massage: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        primaryKey: true
     },
     authorId: {
         type: DataTypes.BIGINT,
