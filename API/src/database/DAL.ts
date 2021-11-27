@@ -29,4 +29,16 @@ export class DAL {
         return ret;
     }
 
+    static async getUserByEmail(email: string): Promise<User> {
+        const query = User.findOne({
+            where: {
+                email: {
+                    [Op.iLike]: `%${email}%`,
+                }
+            }
+        });
+
+        return query;
+    }
+
 }
