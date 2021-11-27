@@ -1,4 +1,4 @@
-import { Op } from "sequelize/types";
+import { Op } from "sequelize";
 import { ApplicationError } from "../router/ApplicationError";
 import { HTTPStatus } from "../utils";
 import { User } from "./models/User";

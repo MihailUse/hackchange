@@ -51,7 +51,7 @@ export default class ApiRouter extends BaseRouter {
             }
         );
 
-        res.json({ user });
+        res.json({ user, token });
     }
 
     private async getUser(req: Request, res: Response): Promise<void> {
