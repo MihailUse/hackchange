@@ -24,25 +24,35 @@ export default class UserRouter extends BaseRouter {
     }
 
     private async singUp(req: Request, res: Response): Promise<void> {
-        const { newUser }: { newUser } = req.body;
+        const { avatar, name, email, password, shortLink }: {
+            avatar?: string,
+            name: string,
+            email: string,
+            password: string,
+            shortLink?: string
+        } = req.body;
+
+        if (!name || !email || !password) {
+            throw new ApplicationError(HTTPStatus.BAD_REQUEST, "name, email and password is required fields");
+        }
 
         const passwordHash = await bcrypt.hash(
-            newUser.password,
+            password,
             Number(process.env.SALT_ROUNDS) || 10
         );
 
         const user: User = await User.create({
-            name: newUser.name,
+            avatar: avatar,
+            name: name,
             password: passwordHash,
-            email: newUser.email,
+            email: email,
+            shortLink: shortLink
         });
 
         const token = jwt.sign(
             {
                 data: {
                     id: user.id,
-                    name: user.name,
-                    email: user.email,
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
                 },
@@ -98,10 +108,29 @@ export default class UserRouter extends BaseRouter {
     }
 
     private async editUser(req: Request, res: Response): Promise<void> {
-        const { update } = req.body;
-
+        const { avatar, name, email, password, shortLink }: {
+                avatar?: string, 
+                name?: string,
+                email?: string,
+                password?: string,
+                shortLink?: string
+            } = req.body;
+        
+        if (password) {
+            var passwordHash = await bcrypt.hash(
+                password,
+                Number(process.env.SALT_ROUNDS) || 10
+            );
+        }
+        
         const user: User = await User.findByPk(req.body.token.user.id);
-        await user.update({ ...update });
+        await user.update({
+            avatar: avatar,
+            name: name,
+            password: passwordHash,
+            email: email,
+            shortLink: shortLink
+        });
 
         res.json({ user });
     }
