@@ -6,6 +6,11 @@ import { HTTPStatus } from "../utils";
 
 export default abstract class BaseRouter {
     public router: Router = express.Router();
+    public basePath: string = "/";
+
+    constructor(basePath: string) {
+        this.basePath = basePath;
+    }
 
     protected failable(func: (req: Request, res: Response) => Promise<any>) {
         return async function (req: Request, res: Response) {
