@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Invest</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_bottom_nav">BottomNav</string>
+    <string name="title_home">Обзор</string>
+    <string name="title_dashboard">Каталог</string>
+    <string name="title_notifications">Уведомление</string>
+    <string name="title_lenta">Лента</string>
+    <string name="title_more">Ещё</string>
+</resources>
