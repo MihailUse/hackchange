@@ -6,15 +6,15 @@ import BaseRouter from "./BaseRouter";
 import { validateJWT } from "../utils";
 
 
-export default class ApiRouter extends BaseRouter {
+export default class UserRouter extends BaseRouter {
     constructor(basePath: string) {
         super(basePath);
         this.initRoutes();
     }
 
     private initRoutes(): void {
-        this.RegisterPostRoute("/sungUp", this.sungUp.bind(this), validateJWT);
-        this.RegisterPostRoute("/sungIn", this.sungIn.bind(this), validateJWT);
+        this.RegisterPostRoute("/singUp", this.singUp.bind(this), validateJWT);
+        this.RegisterPostRoute("/singIn", this.singIn.bind(this), validateJWT);
 
         this.RegisterPostRoute("/get", this.getUser.bind(this), validateJWT);
         this.RegisterPostRoute("/create", this.createUser.bind(this), validateJWT);
@@ -22,7 +22,7 @@ export default class ApiRouter extends BaseRouter {
         this.RegisterPostRoute("/delate", this.delateUser.bind(this), validateJWT);
     }
 
-    private async sungUp(req: Request, res: Response): Promise<void> {
+    private async singUp(req: Request, res: Response): Promise<void> {
         const { newUser } = req.body;
 
         const user: User = await User.create({ ...newUser });
@@ -30,7 +30,7 @@ export default class ApiRouter extends BaseRouter {
         res.json({ user });
     }
 
-    private async sungIn(req: Request, res: Response): Promise<void> {
+    private async singIn(req: Request, res: Response): Promise<void> {
         const { userId } = req.body;
 
         const user: User = await User.findByPk(userId);
@@ -39,7 +39,7 @@ export default class ApiRouter extends BaseRouter {
             {
                 data: {
                     id: user.id,
-                    fullName: user.name,
+                    name: user.name,
                     email: user.email,
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
@@ -47,7 +47,7 @@ export default class ApiRouter extends BaseRouter {
             },
             process.env.TOKEN_SECRET,
             {
-                expiresIn: "86_400_000",
+                expiresIn: "24h",
             }
         );
 
