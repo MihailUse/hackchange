@@ -5,7 +5,7 @@ import App from "./app";
 import UserRouter from "./router/UserRouter";
 
 
-const app = new App(Number(process.env.PORT) || 3040);
+const app = new App(process.env.NODE_HOST, Number(process.env.NODE_PORT) || 3040);
 
 app.middlewares([
     express.json({

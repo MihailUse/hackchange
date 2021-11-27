@@ -4,15 +4,16 @@ import BaseRouter from "./router/BaseRouter";
 
 export default class App {
     private app: Application;
+    private host: string;
     private port: number;
 
-    constructor(port: number) {
+    constructor(host: string, port: number) {
         this.app = express();
+        this.host = host;
+        this.port = port;
     }
 
-    public middlewares(middlewares: {
-        forEach: (arg: (middleware: any) => void) => void;
-    }): void {
+    public middlewares(middlewares: any[]): void {
         middlewares.forEach((middleware) => {
             this.app.use(middleware);
         });
@@ -26,9 +27,7 @@ export default class App {
 
     public listen(): void {
         this.app.listen(this.port, () => {
-            console.log(
-                `App listening on the http://localhost:${this.port}`
-            );
+            console.log(`App listening on the http://${this.host}:${this.port}`);
         });
     }
 }
