@@ -1,21 +1,16 @@
 import express from "express";
 import { Application } from "express";
-import https from "https";
-import { readFileSync } from "fs";
-import { homedir } from "os";
+import BaseRouter from "./router/BaseRouter";
 
 export default class App {
-    app: Application;
-    port: number;
+    private app: Application;
+    private port: number;
 
-    constructor(config: { port: number; middlewares: any; routes: any }) {
+    constructor(port: number) {
         this.app = express();
-        this.port = config.port;
-        this.middlewares(config.middlewares);
-        this.routes(config.routes);
     }
 
-    private middlewares(middlewares: {
+    public middlewares(middlewares: {
         forEach: (arg: (middleware: any) => void) => void;
     }): void {
         middlewares.forEach((middleware) => {
@@ -23,38 +18,17 @@ export default class App {
         });
     }
 
-    private routes(routes: {
-        forEach: (arg: (controller: any) => void) => void;
-    }): void {
+    public routes(routes: BaseRouter[]): void {
         routes.forEach((controller) => {
-            this.app.use("/", controller.router);
+            this.app.use(controller.basePath, controller.router);
         });
     }
 
     public listen(): void {
-        if (process.env.HOSTNAME === "localhost") {
-            const server = https.createServer(
-                {
-                    key: readFileSync(
-                        process.env.HTTPS_KEY.replace("~", homedir())
-                    ),
-                    cert: readFileSync(
-                        process.env.HTTPS_CERT.replace("~", homedir())
-                    ),
-                },
-                this.app
+        this.app.listen(this.port, () => {
+            console.log(
+                `App listening on the http://localhost:${this.port}`
             );
-            server.listen(this.port, () =>
-                console.log(
-                    `App listening on the https://localhost:${this.port}`
-                )
-            );
-        } else {
-            this.app.listen(this.port, () => {
-                console.log(
-                    `App listening on the http://localhost:${this.port}`
-                );
-            });
-        }
+        });
     }
 }

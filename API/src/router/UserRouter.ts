@@ -6,8 +6,8 @@ import { validateJWT } from "../utils";
 
 
 export default class ApiRouter extends BaseRouter {
-    constructor() {
-        super();
+    constructor(basePath: string) {
+        super(basePath);
         this.initRoutes();
     }
 

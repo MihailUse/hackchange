@@ -1,26 +1,22 @@
 import cors from "cors";
 import express from "express";
-import morgan from "morgan";
 
 import App from "./app";
 import UserRouter from "./router/UserRouter";
 
 
-const app = new App({
-    port: Number(process.env.PORT) || 3040,
+const app = new App(Number(process.env.PORT) || 3040);
 
-    middlewares: [
-        express.json({
-            limit: "100mb"
-        }),
-        express.urlencoded({ extended: false }),
-        cors(),
-        morgan('dev')
-    ],
+app.middlewares([
+    express.json({
+        limit: "100mb"
+    }),
+    express.urlencoded({ extended: false }),
+    cors(),
+]);
 
-    routes: [
-        new UserRouter(),
-    ]
-});
+app.routes([
+    new UserRouter("/user"),
+]);
 
 app.listen();
