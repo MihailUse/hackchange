@@ -20,7 +20,7 @@ export default class UserRouter extends BaseRouter {
 
         this.RegisterPostRoute("/get", this.getUser.bind(this), validateJWT);
         this.RegisterPostRoute("/edit", this.editUser.bind(this), validateJWT);
-        this.RegisterPostRoute("/delate", this.delateUser.bind(this), validateJWT);
+        this.RegisterPostRoute("/delete", this.deleteUser.bind(this), validateJWT);
     }
 
     private async singUp(req: Request, res: Response): Promise<void> {
@@ -135,7 +135,7 @@ export default class UserRouter extends BaseRouter {
         res.json({ user });
     }
 
-    private async delateUser(req: Request, res: Response): Promise<void> {
+    private async deleteUser(req: Request, res: Response): Promise<void> {
         const user: User = await User.findByPk(req.body.token.user.id);
         user.destroy();
 
