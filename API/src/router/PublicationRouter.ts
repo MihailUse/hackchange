@@ -44,7 +44,7 @@ export default class PublicationRouter extends BaseRouter {
             title: title,
             message: message,
             onlineLink: onlineLink,
-            authorId: req.body.token.user.id,
+            userId: req.body.token.user.id,
             toolId: toolId
         });
 
