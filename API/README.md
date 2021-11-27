@@ -37,3 +37,22 @@ DB_DRIVER=postgres
 DB_HOST=
 DB_PORT=5432
 ```
+
+## Эндпоинты
+
+```
+POST /user/singIn
+{ email, password }
+
+POST /user/singUp
+{ avatar, name, email, password, shortLink }
+
+POST /user/get
+{ userId }
+
+POST /user/edit
+{ avatar, name, email, password, shortLink }
+
+POST /user/delate
+{  }
+```
