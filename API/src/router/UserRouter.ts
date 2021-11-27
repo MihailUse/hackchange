@@ -12,6 +12,9 @@ export default class ApiRouter extends BaseRouter {
     }
 
     private initRoutes(): void {
+        this.RegisterPostRoute("/sungUp", this.sungUp.bind(this), validateJWT);
+        this.RegisterPostRoute("/sungIn", this.sungIn.bind(this), validateJWT);
+
         this.RegisterPostRoute("/get", this.getUser.bind(this), validateJWT);
         this.RegisterPostRoute("/create", this.createUser.bind(this), validateJWT);
         this.RegisterPostRoute("/edit", this.editUser.bind(this), validateJWT);

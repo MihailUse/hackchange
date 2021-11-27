@@ -34,12 +34,10 @@ Comment.init({
     },
     authorId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     },
     publicationId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     }
 },

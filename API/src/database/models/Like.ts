@@ -25,18 +25,16 @@ export class Like extends Model<LikeAttributes, LikeInput> implements LikeAttrib
 Like.init({
     id: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
         allowNull: false
     },
     userId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     },
     publicationId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     },
 },

@@ -29,12 +29,10 @@ Follower.init({
     },
     userId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     },
     followerId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     },
 },
