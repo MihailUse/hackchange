@@ -23,6 +23,11 @@ export class Comment extends Model<CommentAttributes, CommentInput> implements C
     massage: string;
     authorId: number;
     publicationId: number;
+
+    // timestamps
+    public readonly createdAt: Date;
+    public readonly updatedAt: Date;
+    public readonly deletedAt: Date;
 }
 
 
