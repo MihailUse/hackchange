@@ -5,10 +5,11 @@ import sequelizeDB from '../sequelize'
 interface PublicationAttributes {
     id: number;
     image: object;
+    title: string;
+    message: string;
+    onlineLink: string;
     authorId: number;
     toolId: number;
-    onlineLink: string;
-    message: string;
 }
 
 export interface PublicationInput extends Optional<PublicationAttributes, 'id'> { }
@@ -18,10 +19,11 @@ export interface PublicationOuput extends Required<PublicationAttributes> { }
 export class Publication extends Model<PublicationAttributes, PublicationInput> implements PublicationAttributes {
     id: number;
     image: object;
+    title: string;
+    message: string;
+    onlineLink: string;
     authorId: number;
     toolId: number;
-    onlineLink: string;
-    message: string;
 
     // timestamps
     public readonly createdAt: Date;
@@ -39,23 +41,26 @@ Publication.init({
     image: {
         type: DataTypes.BLOB,
     },
+    title: {
+        type: DataTypes.STRING(256),
+        allowNull: false
+    },
+    message: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
     authorId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     },
     toolId: {
         type: DataTypes.BIGINT,
-        primaryKey: true,
         allowNull: false
     },
     onlineLink: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
-    },
-    message: {
-        type: DataTypes.STRING,
-    },
+    }
 },
     {
         sequelize: sequelizeDB,
