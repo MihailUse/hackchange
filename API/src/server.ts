@@ -4,6 +4,7 @@ import express from "express";
 import App from "./app";
 import MessageRouter from "./router/MessageRouter";
 import PublicationRouter from "./router/PublicationRouter";
+import ToolRouter from "./router/ToolRouter";
 import UserRouter from "./router/UserRouter";
 
 
@@ -19,8 +20,9 @@ app.middlewares([
 
 app.routes([
     new UserRouter("/user"),
-    new PublicationRouter("/publication"),
-    new MessageRouter("/message")
+    new ToolRouter("/tool"),
+    new MessageRouter("/message"),
+    new PublicationRouter("/publication")
 ]);
 
 app.listen();
