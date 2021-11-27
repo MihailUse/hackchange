@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { DAL } from "../database/DAL";
 import { User } from "../database/models/User";
 import BaseRouter from "./BaseRouter";
 import { validateJWT } from "../utils";
@@ -13,27 +13,27 @@ export default class UserRouter extends BaseRouter {
     }
 
     private initRoutes(): void {
-        this.RegisterPostRoute("/singUp", this.singUp.bind(this), validateJWT);
-        this.RegisterPostRoute("/singIn", this.singIn.bind(this), validateJWT);
+        this.RegisterPostRoute("/singIn", this.singIn.bind(this));
+        this.RegisterPostRoute("/singUp", this.singUp.bind(this));
 
         this.RegisterPostRoute("/get", this.getUser.bind(this), validateJWT);
-        this.RegisterPostRoute("/create", this.createUser.bind(this), validateJWT);
         this.RegisterPostRoute("/edit", this.editUser.bind(this), validateJWT);
         this.RegisterPostRoute("/delate", this.delateUser.bind(this), validateJWT);
     }
 
     private async singUp(req: Request, res: Response): Promise<void> {
-        const { newUser } = req.body;
+        const { newUser }: { newUser } = req.body;
 
-        const user: User = await User.create({ ...newUser });
+        const passwordHash = await bcrypt.hash(
+            newUser.password,
+            Number(process.env.SALT_ROUNDS) || 10
+        );
 
-        res.json({ user });
-    }
-
-    private async singIn(req: Request, res: Response): Promise<void> {
-        const { userId } = req.body;
-
-        const user: User = await User.findByPk(userId);
+        const user: User = await User.create({
+            name: newUser.name,
+            password: passwordHash,
+            email: newUser.email,
+        });
 
         const token = jwt.sign(
             {
@@ -47,7 +47,29 @@ export default class UserRouter extends BaseRouter {
             },
             process.env.TOKEN_SECRET,
             {
-                expiresIn: "24h",
+                expiresIn: Number.parseInt(process.env.TOKEN_EXPIRES) // 30 days
+            }
+        );
+
+        res.json({ user, token });
+    }
+
+    private async singIn(req: Request, res: Response): Promise<void> {
+        const user: User = await User.findByPk(req.body.token.user.id);
+
+        const token = jwt.sign(
+            {
+                data: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt,
+                },
+            },
+            process.env.TOKEN_SECRET,
+            {
+                expiresIn: Number.parseInt(process.env.TOKEN_EXPIRES) // 30 days
             }
         );
 
@@ -62,18 +84,10 @@ export default class UserRouter extends BaseRouter {
         res.json({ user });
     }
 
-    private async createUser(req: Request, res: Response): Promise<void> {
-        const { newUser } = req.body;
-
-        const user: User = await User.create({ ...newUser });
-
-        res.json({ user });
-    }
-
     private async editUser(req: Request, res: Response): Promise<void> {
         const { update } = req.body;
 
-        const user: User = await DAL.tryGetUser(req.body.token.user.id);
+        const user: User = await User.findByPk(req.body.token.user.id);
         await user.update({ ...update });
 
         res.json({ user });
