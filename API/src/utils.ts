@@ -56,8 +56,8 @@ async function validateJwtToken(options: { token: string }) {
             iat: verify.iat,
             exp: verify.exp,
         };
-    } catch (e) {
-        throw e;
+    } catch (err) {
+        throw err;
     }
 }
 
