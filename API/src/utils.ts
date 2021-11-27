@@ -81,6 +81,10 @@ export async function validateJWT(
         next();
     } catch (err) {
         console.log(err);
-        res.status(err?.status || HTTPStatus.INTERNAL).json(err);
+        if (err instanceof ApplicationError) {
+            res.status(err.status).json({ message: err.message });
+        } else {
+            res.status(HTTPStatus.INTERNAL).json({ message: err });
+        }
     }
 }
