@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../database/models/User";
+import { DAL } from "../database/DAL";
 import BaseRouter from "./BaseRouter";
-import { validateJWT } from "../utils";
+import { User } from "../database/models/User";
+import { HTTPStatus, validateJWT } from "../utils";
+import { ApplicationError } from "./ApplicationError";
 
 
 export default class UserRouter extends BaseRouter {
@@ -55,7 +57,18 @@ export default class UserRouter extends BaseRouter {
     }
 
     private async singIn(req: Request, res: Response): Promise<void> {
-        const user: User = await User.findByPk(req.body.token.user.id);
+        const { email, password } = req.body;
+
+        const user: User = await DAL.getUserByEmail(email);
+
+        if (!user) {
+            throw new ApplicationError(HTTPStatus.NOT_FOUND, "Ivalid email");
+        }
+
+        const hashCompare = await bcrypt.compare(password, user.password);
+        if (!hashCompare) {
+            throw new ApplicationError(HTTPStatus.BAD_REQUEST, "Invalid password.");
+        }
 
         const token = jwt.sign(
             {
