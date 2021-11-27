@@ -6,7 +6,7 @@ interface PublicationAttributes {
     id: number;
     image: object;
     authorId: number;
-    foolId: number;
+    toolId: number;
     onlineLink: string;
     message: string;
 }
@@ -19,7 +19,7 @@ export class Publication extends Model<PublicationAttributes, PublicationInput> 
     id: number;
     image: object;
     authorId: number;
-    foolId: number;
+    toolId: number;
     onlineLink: string;
     message: string;
 
@@ -41,10 +41,12 @@ Publication.init({
     },
     authorId: {
         type: DataTypes.BIGINT,
+        primaryKey: true,
         allowNull: false
     },
-    foolId: {
+    toolId: {
         type: DataTypes.BIGINT,
+        primaryKey: true,
         allowNull: false
     },
     onlineLink: {

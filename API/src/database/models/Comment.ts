@@ -25,6 +25,7 @@ export class Comment extends Model<CommentAttributes, CommentInput> implements C
 Comment.init({
     id: {
         type: DataTypes.BIGINT,
+        primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },

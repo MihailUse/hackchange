@@ -23,15 +23,18 @@ export class Follower extends Model<FollowerAttributes, FollowerInput> implement
 Follower.init({
     id: {
         type: DataTypes.BIGINT,
+        primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },
     userId: {
         type: DataTypes.BIGINT,
+        primaryKey: true,
         allowNull: false
     },
     followerId: {
         type: DataTypes.BIGINT,
+        primaryKey: true,
         allowNull: false
     },
 },

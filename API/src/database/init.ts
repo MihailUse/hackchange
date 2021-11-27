@@ -5,8 +5,36 @@ import { Like } from "./models/Like";
 import { Publication } from "./models/Publication";
 import { Tool } from "./models/Tool";
 
-Permission.hasMany(RoomUser, {
-    foreignKey: 'permissionId'
+User.hasMany(Follower, {
+    foreignKey: 'userId'
+});
+
+User.hasMany(Follower, {
+    foreignKey: 'followerId'
+});
+
+User.hasMany(Like, {
+    foreignKey: 'userId'
+});
+
+User.hasMany(Comment, {
+    foreignKey: 'authorId'
+});
+
+User.hasMany(Publication, {
+    foreignKey: 'authorId'
+});
+
+Tool.hasMany(Publication, {
+    foreignKey: 'toolId'
+});
+
+Publication.hasMany(Comment, {
+    foreignKey: 'publicationId'
+});
+
+Publication.hasMany(Like, {
+    foreignKey: 'publicationId'
 });
 
 
