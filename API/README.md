@@ -2,7 +2,7 @@
 
 ## База данных
 
-Код БД на PostgreSQL
+Код БД на PostgreSQL. [ERD-схема](./API/docs/database.png)
 
 ## Лайки и комментарии
 
