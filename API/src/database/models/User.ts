@@ -4,7 +4,7 @@ import sequelizeDB from '../sequelize'
 
 interface UserAttributes {
     id: number;
-    avatar?: object;
+    avatar?: string;
     name: string;
     email: string;
     password: string;
@@ -26,7 +26,7 @@ export interface UserOuput extends Required<UserAttributes> { }
 
 export class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     id: number;
-    avatar: object;
+    avatar: string;
     name: string;
     email: string;
     password: string;
@@ -47,7 +47,7 @@ User.init({
         allowNull: false
     },
     avatar: {
-        type: DataTypes.BLOB,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     name: {
