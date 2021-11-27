@@ -5,7 +5,7 @@ import sequelizeDB from '../sequelize'
 interface CommentAttributes {
     id: number;
     massage: string;
-    authorId: number;
+    userId: number;
     publicationId: number;
 
     createdAt?: Date;
@@ -21,7 +21,7 @@ export interface CommentOuput extends Required<CommentAttributes> { }
 export class Comment extends Model<CommentAttributes, CommentInput> implements CommentAttributes {
     id: number;
     massage: string;
-    authorId: number;
+    userId: number;
     publicationId: number;
 
     // timestamps
@@ -42,7 +42,7 @@ Comment.init({
         type: DataTypes.TEXT,
         primaryKey: true
     },
-    authorId: {
+    userId: {
         type: DataTypes.BIGINT,
         allowNull: false
     },

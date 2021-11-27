@@ -2,10 +2,10 @@ import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeDB from '../sequelize'
 
 
-interface ReplyMessageAttributes {
+interface ReplyCommentAttributes {
     id: number;
     massage: string;
-    authorId: number;
+    userId: number;
     commentId: number;
     publicationId: number;
 
@@ -15,14 +15,14 @@ interface ReplyMessageAttributes {
 }
 
 
-export interface ReplyMessageInput extends Optional<ReplyMessageAttributes, 'id'> { }
-export interface ReplyMessageOuput extends Required<ReplyMessageAttributes> { }
+export interface ReplyCommentInput extends Optional<ReplyCommentAttributes, 'id'> { }
+export interface ReplyCommentOuput extends Required<ReplyCommentAttributes> { }
 
 
-export class ReplyMessage extends Model<ReplyMessageAttributes, ReplyMessageInput> implements ReplyMessageAttributes {
+export class ReplyComment extends Model<ReplyCommentAttributes, ReplyCommentInput> implements ReplyCommentAttributes {
     id: number;
     massage: string;
-    authorId: number;
+    userId: number;
     commentId: number;
     publicationId: number;
 
@@ -33,7 +33,7 @@ export class ReplyMessage extends Model<ReplyMessageAttributes, ReplyMessageInpu
 }
 
 
-ReplyMessage.init({
+ReplyComment.init({
     id: {
         type: DataTypes.BIGINT,
         primaryKey: true,
@@ -43,7 +43,7 @@ ReplyMessage.init({
     massage: {
         type: DataTypes.TEXT
     },
-    authorId: {
+    userId: {
         type: DataTypes.BIGINT,
         allowNull: false
     },

@@ -4,7 +4,16 @@ import { Follower } from "./models/Follower";
 import { Like } from "./models/Like";
 import { Publication } from "./models/Publication";
 import { Tool } from "./models/Tool";
-import { ReplyMessage } from "./models/ReplyMessage"
+import { ReplyComment } from "./models/ReplyComment"
+
+User.sync({ alter: true });
+Comment.sync({ alter: true });
+Follower.sync({ alter: true });
+Like.sync({ alter: true });
+Publication.sync({ alter: true });
+Tool.sync({ alter: true });
+ReplyComment.sync({ alter: true });
+
 
 User.hasMany(Follower, {
     foreignKey: 'userId'
@@ -19,11 +28,11 @@ User.hasMany(Like, {
 });
 
 User.hasMany(Comment, {
-    foreignKey: 'authorId'
+    foreignKey: 'userId'
 });
 
 User.hasMany(Publication, {
-    foreignKey: 'authorId'
+    foreignKey: 'userId'
 });
 
 Tool.hasMany(Publication, {
@@ -38,28 +47,14 @@ Publication.hasMany(Like, {
     foreignKey: 'publicationId'
 });
 
-Publication.hasMany(Like, {
+Publication.hasMany(ReplyComment, {
     foreignKey: 'publicationId'
 });
 
-Comment.hasMany(ReplyMessage, {
+Comment.hasMany(ReplyComment, {
     foreignKey: 'commentId'
 });
 
-User.hasMany(ReplyMessage, {
+User.hasMany(ReplyComment, {
     foreignKey: 'userId'
 });
-
-Publication.hasMany(ReplyMessage, {
-    foreignKey: 'publicationId'
-});
-
-
-
-User.sync({ alter: true });
-Comment.sync({ alter: true });
-Follower.sync({ alter: true });
-Like.sync({ alter: true });
-Publication.sync({ alter: true });
-Tool.sync({ alter: true });
-ReplyMessage.sync({ alter: true });

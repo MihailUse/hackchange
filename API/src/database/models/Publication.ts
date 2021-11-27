@@ -8,7 +8,7 @@ interface PublicationAttributes {
     title: string;
     message: string;
     onlineLink?: string;
-    authorId: number;
+    userId: number;
     toolId: number;
 
     createdAt?: Date;
@@ -26,7 +26,7 @@ export class Publication extends Model<PublicationAttributes, PublicationInput> 
     title: string;
     message: string;
     onlineLink: string;
-    authorId: number;
+    userId: number;
     toolId: number;
 
     // timestamps
@@ -53,7 +53,7 @@ Publication.init({
         type: DataTypes.TEXT,
         allowNull: false
     },
-    authorId: {
+    userId: {
         type: DataTypes.BIGINT,
         primaryKey: true,
         allowNull: false
