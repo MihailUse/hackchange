@@ -6,8 +6,10 @@ interface UserAttributes {
     id: number;
     avatar: object;
     name: string;
+    email: string;
     password: string;
     shortLink: string;
+    
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
@@ -26,6 +28,7 @@ export class User extends Model<UserAttributes, UserInput> implements UserAttrib
     id: number;
     avatar: object;
     name: string;
+    email: string;
     password: string;
     shortLink: string;
 
@@ -47,15 +50,19 @@ User.init({
         type: DataTypes.BLOB,
     },
     name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(256),
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING(256),
         allowNull: false
     },
     password: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(256),
         allowNull: false
     },
     shortLink: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(256),
         allowNull: false
     }
 },

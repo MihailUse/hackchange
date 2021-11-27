@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import { DAL } from "../database/DAL";
 import { User } from "../database/models/User";
 import BaseRouter from "./BaseRouter";
@@ -33,6 +34,22 @@ export default class ApiRouter extends BaseRouter {
         const { userId } = req.body;
 
         const user: User = await User.findByPk(userId);
+
+        const token = jwt.sign(
+            {
+                data: {
+                    id: user.id,
+                    fullName: user.name,
+                    email: user.email,
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt,
+                },
+            },
+            process.env.TOKEN_SECRET,
+            {
+                expiresIn: "86_400_000",
+            }
+        );
 
         res.json({ user });
     }
