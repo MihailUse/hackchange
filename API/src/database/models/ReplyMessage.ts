@@ -6,7 +6,7 @@ interface ReplyMessageAttributes {
     id: number;
     massage: string;
     authorId: number;
-    massageId: number;
+    commentId: number;
     publicationId: number;
 
     createdAt?: Date;
@@ -23,7 +23,7 @@ export class ReplyMessage extends Model<ReplyMessageAttributes, ReplyMessageInpu
     id: number;
     massage: string;
     authorId: number;
-    massageId: number;
+    commentId: number;
     publicationId: number;
 
     // timestamps
@@ -47,7 +47,7 @@ ReplyMessage.init({
         type: DataTypes.BIGINT,
         allowNull: false
     },
-    massageId: {
+    commentId: {
         type: DataTypes.BIGINT,
         allowNull: false
     },
