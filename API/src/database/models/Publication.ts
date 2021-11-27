@@ -4,10 +4,10 @@ import sequelizeDB from '../sequelize'
 
 interface PublicationAttributes {
     id: number;
-    image: object;
+    image?: object;
     title: string;
     message: string;
-    onlineLink: string;
+    onlineLink?: string;
     authorId: number;
     toolId: number;
 

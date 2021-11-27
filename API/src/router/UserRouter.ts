@@ -137,7 +137,7 @@ export default class UserRouter extends BaseRouter {
 
     private async deleteUser(req: Request, res: Response): Promise<void> {
         const user: User = await User.findByPk(req.body.token.user.id);
-        user.destroy();
+        await user.destroy();
 
         res.json({ message: "ok" });
     }
