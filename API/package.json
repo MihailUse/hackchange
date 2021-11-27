@@ -1,5 +1,5 @@
 {
-  "name": "hackchangeAPi",
+  "name": "hackchange",
   "version": "1.0.0",
   "description": "some description",
   "main": "index.js",
@@ -13,7 +13,6 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.11.0",

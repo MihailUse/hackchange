@@ -1,6 +1,5 @@
 import cors from "cors";
 import express from "express";
-import morgan from "morgan";
 
 import App from "./app";
 import UserRouter from "./router/UserRouter";
@@ -14,7 +13,6 @@ app.middlewares([
     }),
     express.urlencoded({ extended: false }),
     cors(),
-    morgan('dev')
 ]);
 
 app.routes([
