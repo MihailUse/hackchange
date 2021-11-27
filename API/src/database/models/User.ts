@@ -4,11 +4,11 @@ import sequelizeDB from '../sequelize'
 
 interface UserAttributes {
     id: number;
-    avatar: object;
+    avatar?: object;
     name: string;
     email: string;
     password: string;
-    shortLink: string;
+    shortLink?: string;
     
     createdAt?: Date;
     updatedAt?: Date;
@@ -48,6 +48,7 @@ User.init({
     },
     avatar: {
         type: DataTypes.BLOB,
+        allowNull: true
     },
     name: {
         type: DataTypes.STRING(256),
@@ -63,7 +64,7 @@ User.init({
     },
     shortLink: {
         type: DataTypes.STRING(256),
-        allowNull: false
+        allowNull: true
     }
 },
     {
