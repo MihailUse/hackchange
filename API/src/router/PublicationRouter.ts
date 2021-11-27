@@ -13,6 +13,7 @@ export default class PublicationRouter extends BaseRouter {
 
     private initRoutes(): void {
         this.RegisterPostRoute("/getPublications", this.getPublications.bind(this), validateJWT);
+        this.RegisterPostRoute("/getUserPublications", this.getUserPublications.bind(this), validateJWT);
 
         this.RegisterPostRoute("/create", this.create.bind(this), validateJWT);
         this.RegisterPostRoute("/edit", this.edit.bind(this), validateJWT);
@@ -22,6 +23,21 @@ export default class PublicationRouter extends BaseRouter {
     private async getPublications(req: Request, res: Response): Promise<void> {
 
         const publication: Publication[] = await Publication.findAll({
+            order: [
+                ['createdAt', 'ASC']
+            ]
+        });
+
+        res.json({ publication });
+    }
+
+    private async getUserPublications(req: Request, res: Response): Promise<void> {
+        const { userId } = req.body;
+
+        const publication: Publication[] = await Publication.findAll({
+            where: {
+                userId: userId
+            },
             order: [
                 ['createdAt', 'ASC']
             ]
