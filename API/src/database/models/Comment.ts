@@ -7,6 +7,10 @@ interface CommentAttributes {
     massage: string;
     authorId: number;
     publicationId: number;
+
+    createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date;
 }
 
 

@@ -6,7 +6,8 @@ interface ToolAttributes {
     id: number;
     name: string;
     description: string;
-    image: object;
+    image: Blob;
+
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
@@ -21,7 +22,7 @@ export class Tool extends Model<ToolAttributes, ToolInput> implements ToolAttrib
     id: number;
     name: string;
     description: string;
-    image: object;
+    image: Blob;
 
     // timestamps
     public readonly createdAt: Date;
@@ -38,7 +39,7 @@ Tool.init({
         allowNull: false
     },
     name: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING(256),
         allowNull: false
     },
     description: {

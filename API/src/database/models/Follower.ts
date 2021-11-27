@@ -38,7 +38,7 @@ Follower.init({
 },
     {
         sequelize: sequelizeDB,
-        timestamps: true,
+        timestamps: false,
         paranoid: true
     }
 );

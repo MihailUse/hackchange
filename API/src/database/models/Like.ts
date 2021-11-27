@@ -17,9 +17,6 @@ export class Like extends Model<LikeAttributes, LikeInput> implements LikeAttrib
     id: number;
     userId: number;
     publicationId: number;
-
-    // timestamps
-    public readonly sendedAt: Date;
 }
 
 Like.init({
@@ -40,7 +37,7 @@ Like.init({
 },
     {
         sequelize: sequelizeDB,
-        timestamps: true,
-        paranoid: true
+        timestamps: false,
+        paranoid: false
     }
 );

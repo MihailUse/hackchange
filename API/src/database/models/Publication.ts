@@ -10,6 +10,10 @@ interface PublicationAttributes {
     onlineLink: string;
     authorId: number;
     toolId: number;
+
+    createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date;
 }
 
 export interface PublicationInput extends Optional<PublicationAttributes, 'id'> { }
