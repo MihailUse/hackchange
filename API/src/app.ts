@@ -1,16 +1,19 @@
 import express from "express";
 import { Application } from "express";
 import BaseRouter from "./router/BaseRouter";
+import ServerSocket from "./ServerSocket/ServerSocket";
 
 export default class App {
     private app: Application;
+    private serverSocket: ServerSocket;
     private host: string;
     private port: number;
 
-    constructor(host: string, port: number) {
+    constructor(host: string, port: string | number) {
         this.app = express();
+        this.serverSocket = new ServerSocket(this.app);
         this.host = host;
-        this.port = port;
+        this.port = Number(port);
     }
 
     public middlewares(middlewares: any[]): void {
@@ -26,8 +29,6 @@ export default class App {
     }
 
     public listen(): void {
-        this.app.listen(this.port, () => {
-            console.log(`App listening on the http://${this.host}:${this.port}`);
-        });
+        this.serverSocket.listen(this.host, this.port);
     }
 }
