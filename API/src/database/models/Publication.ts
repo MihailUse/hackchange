@@ -1,5 +1,10 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeDB from '../sequelize'
+import { DataTypes, Optional } from 'sequelize'
+import { AllowNull, BelongsTo, Column, ForeignKey, HasMany, PrimaryKey, Table, Unique, Model } from 'sequelize-typescript';
+
+import Tool from './Tool';
+import User from './User';
+import Comment from './Comment';
+import ReplyComment from './ReplyComment';
 
 
 interface PublicationAttributes {
@@ -19,58 +24,80 @@ interface PublicationAttributes {
 export interface PublicationInput extends Optional<PublicationAttributes, 'id'> { }
 export interface PublicationOuput extends Required<PublicationAttributes> { }
 
-
-export class Publication extends Model<PublicationAttributes, PublicationInput> implements PublicationAttributes {
+@Table({
+    paranoid: true,
+    timestamps: true,
+    underscored: true,
+    freezeTableName: true,
+    tableName: "publication",
+    modelName: "Publication"
+})
+export default class Publication extends Model<PublicationAttributes, PublicationInput> implements PublicationAttributes {
+    
+    @PrimaryKey
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT,
+        autoIncrement: true
+    })
     id: number;
+
+    @AllowNull(true)
+    @Column({
+        type: DataTypes.TEXT
+    })
     image: object;
+
+    @AllowNull(false)
+    @Unique(true)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
     title: string;
+
+    @AllowNull(false)
+    @Unique(true)
+    @Column({
+        type: DataTypes.TEXT
+    })
     message: string;
+
+    @AllowNull(false)
+    @Unique(true)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
     onlineLink: string;
+
+    @ForeignKey(() => User)
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT
+    })
     userId: number;
+
+    @ForeignKey(() => Tool)
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT
+    })
     toolId: number;
+
+
+    @BelongsTo(() => User)
+    user: User;
+
+    @BelongsTo(() => Tool)
+    tool: Tool;
+
+    @HasMany(() => Comment, "userId") //  { foreignKey: "userId" }
+    comments: Comment[];
+
+    @HasMany(() => ReplyComment, "userId")
+    replyComments: ReplyComment[];
 
     // timestamps
     public readonly createdAt: Date;
     public readonly updatedAt: Date;
     public readonly deletedAt: Date;
 }
-
-Publication.init({
-    id: {
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    image: {
-        type: DataTypes.BLOB,
-    },
-    title: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-    },
-    message: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    userId: {
-        type: DataTypes.BIGINT,
-        primaryKey: true,
-        allowNull: false
-    },
-    toolId: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-    },
-    onlineLink: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    }
-},
-    {
-        sequelize: sequelizeDB,
-        timestamps: true,
-        paranoid: true
-    }
-);
-

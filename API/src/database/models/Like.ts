@@ -1,5 +1,9 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeDB from '../sequelize'
+import { DataTypes, Optional } from 'sequelize'
+import { AllowNull, BelongsTo, Column, ForeignKey, HasMany, PrimaryKey, Table, Unique, Model } from 'sequelize-typescript';
+import Publication from './Publication';
+import User from './User';
+
+
 
 
 interface LikeAttributes {
@@ -12,32 +16,41 @@ interface LikeAttributes {
 export interface LikeInput extends Optional<LikeAttributes, 'id'> { }
 export interface LikeOuput extends Required<LikeAttributes> { }
 
-
-export class Like extends Model<LikeAttributes, LikeInput> implements LikeAttributes {
+@Table({
+    paranoid: false,
+    timestamps: false,
+    underscored: true,
+    freezeTableName: true,
+    tableName: "like",
+    modelName: "Like",
+})
+export default class Like extends Model<LikeAttributes, LikeInput> implements LikeAttributes {
+    @PrimaryKey
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT,
+        autoIncrement: true
+    })
     id: number;
-    userId: number;
-    publicationId: number;
-}
 
-Like.init({
-    id: {
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    userId: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-    },
-    publicationId: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-    },
-},
-    {
-        sequelize: sequelizeDB,
-        timestamps: false,
-        paranoid: false
-    }
-);
+    @ForeignKey(() => User)
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT
+    })
+    userId: number;
+
+    @ForeignKey(() => Publication)
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT
+    })
+    publicationId: number;
+
+
+    @BelongsTo(() => User)
+    user: User;
+
+    @BelongsTo(() => Publication)
+    publication: Publication;
+}

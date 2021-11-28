@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import { ApplicationError } from "../router/ApplicationError";
 import { HTTPStatus } from "../utils";
-import { User } from "./models/User";
+import User from "./models/User";
 
 
 export class DAL {

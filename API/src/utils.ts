@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { ApplicationError } from "./router/ApplicationError";
-import { User } from "./database/models/User";
+import User from "./database/models/User";
 
 export enum HTTPStatus {
     SUCCESS = 200,

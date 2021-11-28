@@ -2,13 +2,24 @@ import { Request, Response } from "express";
 import BaseRouter from "./BaseRouter";
 import { HTTPStatus, validateJWT } from "../utils";
 import { ApplicationError } from "./ApplicationError";
-import { Publication } from "../database/models/Publication";
+import User from "../database/models/User";
+import Publication from "../database/models/Publication";
 
 
 export default class PublicationRouter extends BaseRouter {
     constructor(basePath: string) {
         super(basePath);
         this.initRoutes();
+
+        this.name();
+    }
+
+    private async name() {
+        const user = await User.findAll({
+            include: [Publication]
+        });
+
+        console.log(user);
     }
 
     private initRoutes(): void {

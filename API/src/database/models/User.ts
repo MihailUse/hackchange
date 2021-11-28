@@ -1,5 +1,7 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeDB from '../sequelize'
+import { AllowNull, BelongsTo, Column, ForeignKey, HasMany, PrimaryKey, Table, Unique, Model } from 'sequelize-typescript';
+import { DataTypes, Optional } from 'sequelize'
+import Follow from './Follow';
+import Publication from './Publication';
 
 
 interface UserAttributes {
@@ -9,7 +11,7 @@ interface UserAttributes {
     email: string;
     password: string;
     shortLink?: string;
-    
+
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
@@ -23,53 +25,70 @@ export interface GetAllUsersFilters {
 export interface UserInput extends Optional<UserAttributes, 'id'> { }
 export interface UserOuput extends Required<UserAttributes> { }
 
-
-export class User extends Model<UserAttributes, UserInput> implements UserAttributes {
+@Table({
+    paranoid: true,
+    timestamps: true,
+    underscored: true,
+    freezeTableName: true,
+    tableName: "user",
+    modelName: "User",
+})
+export default class User extends Model<UserAttributes, UserInput> implements UserAttributes {
+    @PrimaryKey
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT,
+        autoIncrement: true
+    })
     id: number;
+
+    @AllowNull(true)
+    @Column({
+        type: DataTypes.TEXT
+    })
     avatar: string;
+
+    @AllowNull(false)
+    @Unique(true)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
     name: string;
+
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
     email: string;
+
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
     password: string;
+
+    @AllowNull(true)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
     shortLink: string;
+
+
+    @HasMany(() => Publication, "userId") //  { foreignKey: "userId" }
+    publications: Publication[];
+
+    @HasMany(() => Follow, {
+        foreignKey: "fromUserId",
+    })
+    following: Follow[];
+
+    @HasMany(() => Follow, {
+        foreignKey: "toUserId",
+    })
+    followers: Follow[];
 
     // timestamps
     public readonly createdAt: Date;
     public readonly updatedAt: Date;
     public readonly deletedAt: Date;
 }
-
-
-User.init({
-    id: {
-        type: DataTypes.BIGINT,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    avatar: {
-        type: DataTypes.TEXT,
-        allowNull: true
-    },
-    name: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-    },
-    password: {
-        type: DataTypes.STRING(256),
-        allowNull: false
-    },
-    shortLink: {
-        type: DataTypes.STRING(256),
-        allowNull: true
-    }
-},
-    {
-        sequelize: sequelizeDB,
-        timestamps: true,
-        paranoid: true
-    }
-);

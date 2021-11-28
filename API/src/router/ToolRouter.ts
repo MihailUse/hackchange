@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import BaseRouter from "./BaseRouter";
 import { HTTPStatus, validateJWT } from "../utils";
 import { ApplicationError } from "./ApplicationError";
-import { Tool } from "../database/models/Tool";
+import Tool from "../database/models/Tool";
 
 
 export default class ToolRouter extends BaseRouter {

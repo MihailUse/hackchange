@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { DAL } from "../database/DAL";
 import BaseRouter from "./BaseRouter";
-import { User } from "../database/models/User";
+import User from "../database/models/User";
 import { HTTPStatus, validateJWT } from "../utils";
 import { ApplicationError } from "./ApplicationError";
 

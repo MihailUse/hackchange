@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import BaseRouter from "./BaseRouter";
 import { HTTPStatus, validateJWT } from "../utils";
 import { ApplicationError } from "./ApplicationError";
-import { Comment } from "../database/models/Comment";
+import Comment from "../database/models/Comment";
 
 
 export default class MessageRouter extends BaseRouter {
@@ -29,7 +29,7 @@ export default class MessageRouter extends BaseRouter {
 
         const comment: Comment = await Comment.create({
             massage: message,
-            authorId: req.body.token.user.id,
+            userId: req.body.token.user.id,
             publicationId: publicationId
         });
 
