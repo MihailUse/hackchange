@@ -71,7 +71,7 @@ DB_PORT=5432
 
 ![regPic](./API/docs/registr.png)
 
-![logPic](./API/docs/log.png)
+![logPic](./API/docs/login.png)
 
 ### Дизайн
 
