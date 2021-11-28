@@ -13,7 +13,7 @@ export default class App {
     private host: string;
     private port: number;
 
-    constructor(host: string, port: string | number) {
+    constructor(host: string, port: string) {
         this.app = express();
         this.serverSocket = new ServerSocket(this.app);
         this.host = host;
