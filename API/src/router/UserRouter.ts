@@ -41,6 +41,11 @@ export default class UserRouter extends BaseRouter {
             throw new ApplicationError(HTTPStatus.BAD_REQUEST, "name, email and password is required fields");
         }
 
+        const existingUser: User = await DAL.getUserByEmail(email);
+        if (!existingUser) {
+            throw new ApplicationError(HTTPStatus.BAD_REQUEST, "User with email address already exists");
+        }
+
         const passwordHash = await bcrypt.hash(
             password,
             Number(process.env.SALT_ROUNDS) || 10
