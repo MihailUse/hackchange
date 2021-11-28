@@ -49,7 +49,6 @@ export default class Publication extends Model<PublicationAttributes, Publicatio
     image: object;
 
     @AllowNull(false)
-    @Unique(true)
     @Column({
         type: DataTypes.TEXT
     })

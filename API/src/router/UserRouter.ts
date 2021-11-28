@@ -42,7 +42,7 @@ export default class UserRouter extends BaseRouter {
         }
 
         const existingUser: User = await DAL.getUserByEmail(email);
-        if (!existingUser) {
+        if (existingUser) {
             throw new ApplicationError(HTTPStatus.BAD_REQUEST, "User with email address already exists");
         }
 
