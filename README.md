@@ -9,11 +9,11 @@
 
 ---
 
-### Дополнительная документация
+## Дополнительная документация
 
 - [ERD-схема](./API/docs/database.png)
 
-### Установки
+## Установки
 
 ```
 git clone https://github.com/MihailUse/hackchange.git
@@ -30,7 +30,7 @@ npm run initdb
 ```
 >Инициализация базы данных
 
-### Настройки
+## Настройки
 
 Переимменуйте файл template.env в .env и измените параметры
 ```
@@ -52,21 +52,83 @@ DB_HOST=
 DB_PORT=5432
 ```
 
-### Запуск
+## Эндпоинты
+
+Эндпоинты к пользователю
+```
+POST /user/singIn
+{ email, password }
+
+POST /user/singUp
+{ avatar, name, email, password, shortLink }
+
+POST /user/get
+{ userId }
+
+POST /user/edit
+{ avatar, name, email, password, shortLink }
+
+POST /user/delate
+{  }
+```
+
+Эндпоинты к инструментам
+```
+POST /Tool/create
+{ image, name, description }
+```
+
+Эндпоинты к руме
+```
+POST /Room/create
+{ userId, name, description }
+```
+
+Эндпоинты к комментам
+```
+POST /Comment/create
+{ message, publicationId, userId, publicationId}
+
+POST /Comment/edit
+{ commentId, message }
+
+POST /Comment/delete
+{ commentId }
+```
+
+Эндпоинты к публикациям
+```
+POST /Publication/getPublications
+{ createdAt }
+
+POST /Publication/getUserPublications
+{ userId, createdAt }
+
+POST /Publication/create
+{ image, message, onlineLink, toolId }
+
+POST /Publication/edit
+{ publicationId, image, message, onlineLink, toolId }
+
+POST /Publication/delete
+{ publicationId }
+```
+
+## Запуск
 
 ```
 npm run dev
 ```
 >Запуск проекта
 
-### База данных
+## База данных
 
 Наша ERD-схема базы данных. Состоит из 11-ти таблиц:
 
 ![dataBase pic](./API/docs/database.png)
 >Воссоздана в нормальной форме
 
-### Регистрация и аутентификация
+## Регистрация и аутентификация
 
 У нас в API используется JSON Web Token
 
@@ -78,18 +140,18 @@ npm run dev
 
 ![logPic](./API/docs/login.png)
 
-### Дизайн
+## Дизайн
 
-### Лайки и комментарии
+## Лайки и комментарии
 
-### Профиль
+## Профиль
 
-### Лента инструментов
+## Лента инструментов
 
-### Система ранга профиля
+## Система ранга профиля
 
-### Справочник
+## Справочник
 
-### Система уведомлений
+## Система уведомлений
 
-### Чат
+## Чат
