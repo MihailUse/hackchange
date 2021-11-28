@@ -48,9 +48,8 @@ export default class PublicationRouter extends BaseRouter {
     }
 
     private async create(req: Request, res: Response): Promise<void> {
-        const { image, title, message, onlineLink, toolId }: {
+        const { image, message, onlineLink, toolId }: {
             image?: object;
-            title: string;
             message: string;
             onlineLink?: string;
             toolId: number;
@@ -58,7 +57,6 @@ export default class PublicationRouter extends BaseRouter {
 
         const publication: Publication = await Publication.create({
             image: image,
-            title: title,
             message: message,
             onlineLink: onlineLink,
             userId: req.body.token.user.id,
@@ -69,10 +67,9 @@ export default class PublicationRouter extends BaseRouter {
     }
 
     private async edit(req: Request, res: Response): Promise<void> {
-        const { publicationId, image, title, message, onlineLink, toolId }: {
+        const { publicationId, image, message, onlineLink, toolId }: {
             publicationId: number;
             image?: object;
-            title?: string;
             message?: string;
             onlineLink?: string;
             toolId?: number;
@@ -89,7 +86,6 @@ export default class PublicationRouter extends BaseRouter {
         
         await publication.update({
             image: image,
-            title: title,
             message: message,
             onlineLink: onlineLink,
             toolId: toolId

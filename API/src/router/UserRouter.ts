@@ -24,15 +24,17 @@ export default class UserRouter extends BaseRouter {
     }
 
     private async singUp(req: Request, res: Response): Promise<void> {
-        const { avatar, name, email, password, shortLink }: {
+        const { avatar, firstName, middleName, lastName, email, password, shortLink }: {
             avatar?: string,
-            name: string,
+            firstName?: string,
+            middleName?: string,
+            lastName?: string,
             email: string,
             password: string,
             shortLink?: string
         } = req.body;
 
-        if (!name || !email || !password) {
+        if (!email || !password) {
             throw new ApplicationError(HTTPStatus.BAD_REQUEST, "name, email and password is required fields");
         }
 
@@ -43,7 +45,9 @@ export default class UserRouter extends BaseRouter {
 
         const user: User = await User.create({
             avatar: avatar,
-            name: name,
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
             password: passwordHash,
             email: email,
             shortLink: shortLink
@@ -84,7 +88,9 @@ export default class UserRouter extends BaseRouter {
             {
                 data: {
                     id: user.id,
-                    name: user.name,
+                    firstName: user.firstName,
+                    middleName: user.middleName,
+                    lastName: user.lastName,
                     email: user.email,
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
@@ -108,25 +114,29 @@ export default class UserRouter extends BaseRouter {
     }
 
     private async editUser(req: Request, res: Response): Promise<void> {
-        const { avatar, name, email, password, shortLink }: {
-                avatar?: string, 
-                name?: string,
-                email?: string,
-                password?: string,
-                shortLink?: string
-            } = req.body;
-        
+        const { avatar, firstName, middleName, lastName, email, password, shortLink }: {
+            avatar?: string,
+            firstName?: string;
+            middleName?: string;
+            lastName?: string;
+            email?: string,
+            password?: string,
+            shortLink?: string
+        } = req.body;
+
         if (password) {
             var passwordHash = await bcrypt.hash(
                 password,
                 Number(process.env.SALT_ROUNDS) || 10
             );
         }
-        
+
         const user: User = await User.findByPk(req.body.token.user.id);
         await user.update({
             avatar: avatar,
-            name: name,
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
             password: passwordHash,
             email: email,
             shortLink: shortLink
