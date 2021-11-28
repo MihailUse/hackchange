@@ -10,16 +10,6 @@ export default class PublicationRouter extends BaseRouter {
     constructor(basePath: string) {
         super(basePath);
         this.initRoutes();
-
-        this.name();
-    }
-
-    private async name() {
-        const user = await User.findAll({
-            include: [Publication]
-        });
-
-        console.log(user);
     }
 
     private initRoutes(): void {

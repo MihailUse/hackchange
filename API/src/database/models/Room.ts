@@ -40,7 +40,8 @@ export default class Room extends Model<RoomAttributes, RoomInput> implements Ro
     @AllowNull(false)
     @Unique(true)
     @Column({
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
     })
     roomUuid: string;
 
