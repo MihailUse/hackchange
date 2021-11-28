@@ -4,6 +4,7 @@ import { HTTPStatus, Permission, validateJWT } from "../utils";
 import { ApplicationError } from "./ApplicationError";
 import Room from "../database/models/Room";
 import RoomUser from "../database/models/RoomUser";
+import Message from "../database/models/Message";
 
 
 export default class RoomRouter extends BaseRouter {
@@ -14,6 +15,8 @@ export default class RoomRouter extends BaseRouter {
 
     private initRoutes(): void {
         this.RegisterPostRoute("/create", this.create.bind(this), validateJWT);
+        this.RegisterPostRoute("/getHistory", this.getHistory.bind(this), validateJWT);
+        this.RegisterPostRoute("/getRooms", this.getRooms.bind(this), validateJWT);
     }
 
     private async create(req: Request, res: Response): Promise<void> {
@@ -46,5 +49,35 @@ export default class RoomRouter extends BaseRouter {
         ]);
 
         res.json({ room });
+    }
+
+    private async getHistory(req: Request, res: Response): Promise<void> {
+        const { roomId }: { roomId: number } = req.body;
+
+        if (!roomId) {
+            throw new ApplicationError(HTTPStatus.BAD_REQUEST, "roomId is required field");
+        }
+
+        const room: Room = await Room.findOne({
+            where: {
+                id: roomId
+            },
+            include: [Message]
+        });
+
+        res.json({ room });
+    }
+
+    private async getRooms(req: Request, res: Response): Promise<void> {
+        const rooms: Room[] = await Room.findAll({
+            include: {
+                model: RoomUser,
+                where: {
+                    userId: req.body.token.user.id,
+                }
+            }
+        });
+
+        res.json({ rooms });
     }
 }
