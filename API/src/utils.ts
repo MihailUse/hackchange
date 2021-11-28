@@ -15,6 +15,12 @@ export enum HTTPStatus {
     SERVICE_UNAVAILABLE = 503,
 }
 
+export enum Permission {
+    OWNER = 1,
+    MODERATOR = 2,
+    MEMBER = 3,
+}
+
 export interface ValidateJWTResponse {
     user: User;
     iat: number;
