@@ -71,7 +71,7 @@ export default class UserRouter extends BaseRouter {
             },
             process.env.TOKEN_SECRET,
             {
-                expiresIn: Number.parseInt(process.env.TOKEN_EXPIRES) // 30 days
+                expiresIn: Number(process.env.TOKEN_EXPIRES || 2592000) // 30 days
             }
         );
 
@@ -96,17 +96,13 @@ export default class UserRouter extends BaseRouter {
             {
                 data: {
                     id: user.id,
-                    firstName: user.firstName,
-                    middleName: user.middleName,
-                    lastName: user.lastName,
-                    email: user.email,
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
                 },
             },
             process.env.TOKEN_SECRET,
             {
-                expiresIn: Number.parseInt(process.env.TOKEN_EXPIRES) // 30 days
+                expiresIn: Number(process.env.TOKEN_EXPIRES || 2592000) // 30 days
             }
         );
 
