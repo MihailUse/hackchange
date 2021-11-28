@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:text="Registration"
+        android:text="@string/title_registration"
         android:textAlignment="center"
 
         android:textSize="40dp"
@@ -20,8 +20,7 @@
         android:textColor="@color/accent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"
-        ></TextView>
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/editTextLogin"

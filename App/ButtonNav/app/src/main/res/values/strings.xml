@@ -8,4 +8,6 @@
     <string name="title_notifications">Уведомление</string>
     <string name="title_lenta">Лента</string>
     <string name="title_more">Ещё</string>
+    <string name="title_registration">Регистрация</string>
+    <string name="title_login">Авторизация</string>
 </resources>
