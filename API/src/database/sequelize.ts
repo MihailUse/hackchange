@@ -8,7 +8,7 @@ import Like from "./models/Like";
 import Room from "./models/Room";
 import Follow from "./models/Follow";
 import Comment from "./models/Comment";
-import Massage from "./models/Massage";
+import Message from "./models/Message";
 import RoomUser from "./models/RoomUser";
 import Permission from "./models/Permission";
 import Publication from "./models/Publication";
@@ -34,7 +34,7 @@ const sequelizeDB = new Sequelize({
         RoomUser,
         Room,
         Permission,
-        Massage
+        Message
     ],
 });
 

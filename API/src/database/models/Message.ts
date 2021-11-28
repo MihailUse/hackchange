@@ -4,7 +4,7 @@ import Room from './Room';
 import User from './User';
 
 
-interface MassageAttributes {
+interface MessageAttributes {
     id: number;
     message: string;
     
@@ -17,18 +17,18 @@ interface MassageAttributes {
 }
 
 
-export interface MassageInput extends Optional<MassageAttributes, 'id'> { }
-export interface MassageOuput extends Required<MassageAttributes> { }
+export interface MessageInput extends Optional<MessageAttributes, 'id'> { }
+export interface MessageOuput extends Required<MessageAttributes> { }
 
 @Table({
     paranoid: true,
     timestamps: true,
     underscored: true,
     freezeTableName: true,
-    tableName: "massage",
-    modelName: "Massage"
+    tableName: "message",
+    modelName: "Message"
 })
-export default class Massage extends Model<MassageAttributes, MassageInput> implements MassageAttributes {
+export default class Message extends Model<MessageAttributes, MessageInput> implements MessageAttributes {
     
     @PrimaryKey
     @AllowNull(false)
@@ -67,5 +67,7 @@ export default class Massage extends Model<MassageAttributes, MassageInput> impl
     user: User;
 
     // timestamps
-    public readonly sendedAt: Date;
+    public readonly createdAt: Date;
+    public readonly updatedAt: Date;
+    public readonly deletedAt: Date;
 }

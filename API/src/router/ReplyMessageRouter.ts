@@ -5,7 +5,7 @@ import { ApplicationError } from "./ApplicationError";
 import Comment from "../database/models/Comment";
 
 
-export default class MessageRouter extends BaseRouter {
+export default class ReplyMessageRouter extends BaseRouter {
     constructor(basePath: string) {
         super(basePath);
         this.initRoutes();

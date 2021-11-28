@@ -1,6 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { Application } from 'express'
 import http from "http";
+import Message from "../database/models/Message";
 
 
 const ROOMS: string[] = ["1", "2", "3", "4", "5"];
@@ -24,9 +25,14 @@ export default class ServerSocket {
                 });
             });
 
-            socket.on("message", (message: IMessage, user: IUser) => {
+            socket.on("message", async (message: IMessage, user: IUser) => {
+
+                // await Message.create({
+                    
+                // })
+
                 socket.to(message.roomId).emit("message", message, user.userId)
-            })
+            });
 
             this.server.on("disconnect", () => {
                 this.users = this.users.filter((user) => user.socketId !== socket.id);
@@ -35,7 +41,8 @@ export default class ServerSocket {
 
         this.server.use((socket, next) => {
             const token = socket.handshake.auth.token;
-
+            console.log(token);
+            
             if (token == 400) {
                 socket.disconnect(true);
             }

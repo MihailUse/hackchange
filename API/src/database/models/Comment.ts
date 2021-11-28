@@ -6,7 +6,7 @@ import User from './User';
 
 interface CommentAttributes {
     id: number;
-    massage: string;
+    message: string;
     
     userId: number;
     publicationId: number;
@@ -42,7 +42,7 @@ export default class Comment extends Model<CommentAttributes, CommentInput> impl
     @Column({
         type: DataTypes.STRING(256)
     })
-    massage: string;
+    message: string;
 
     @ForeignKey(() => User)
     @AllowNull(false)

@@ -7,7 +7,7 @@ import Publication from './Publication';
 
 interface ReplyCommentAttributes {
     id: number;
-    massage: string;
+    message: string;
     
     userId: number;
     commentId: number;
@@ -43,7 +43,7 @@ export default class ReplyComment extends Model<ReplyCommentAttributes, ReplyCom
     @Column({
         type: DataTypes.TEXT
     })
-    massage: string;
+    message: string;
 
     @ForeignKey(() => User)
     @AllowNull(false)
