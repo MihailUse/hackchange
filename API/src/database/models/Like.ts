@@ -4,10 +4,9 @@ import Publication from './Publication';
 import User from './User';
 
 
-
-
 interface LikeAttributes {
     id: number;
+
     userId: number;
     publicationId: number;
 }

@@ -8,6 +8,7 @@ import Publication from './Publication';
 interface ReplyCommentAttributes {
     id: number;
     massage: string;
+    
     userId: number;
     commentId: number;
     publicationId: number;

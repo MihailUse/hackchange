@@ -13,6 +13,7 @@ interface PublicationAttributes {
     title: string;
     message: string;
     onlineLink?: string;
+    
     userId: number;
     toolId: number;
 

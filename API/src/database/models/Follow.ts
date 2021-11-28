@@ -5,6 +5,7 @@ import User from './User';
 
 interface FollowAttributes {
     id: number;
+    
     fromUserId: number;
     toUserId: number;
 }

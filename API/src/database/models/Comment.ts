@@ -7,6 +7,7 @@ import User from './User';
 interface CommentAttributes {
     id: number;
     massage: string;
+    
     userId: number;
     publicationId: number;
 
