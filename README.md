@@ -136,7 +136,7 @@ npm run dev
 
 Визуальное представление решения
 
-![regPic](./API/docs/registr.png)
+![regPic](./API/docs/registr.png) 
 
 ![logPic](./API/docs/login.png)
 
