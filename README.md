@@ -132,9 +132,9 @@ ERD-схема базы данных. Состоит из 11-ти таблиц:
 
 Визуальное представление решения
 
-![regPic](./API/docs/registr.png) 
+![regPic](./API/docs/regi.png) 
 
-![logPic](./API/docs/login.png)
+![logPic](./API/docs/auth.png)
 
 ## Дизайн
 
