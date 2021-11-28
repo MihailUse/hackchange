@@ -2,9 +2,9 @@ import { Server, Socket } from "socket.io";
 import { Application } from 'express'
 import http from "http";
 import Message from "../database/models/Message";
+import Room from "../database/models/Room";
+import RoomUser from "../database/models/RoomUser";
 
-
-const ROOMS: string[] = ["1", "2", "3", "4", "5"];
 
 export default class ServerSocket {
     private httpServer: http.Server;
@@ -16,24 +16,30 @@ export default class ServerSocket {
         this.server = new Server<IClientToServerEvents, IServerToClientEvents, ISocketData>(this.httpServer);
 
         this.server.on("connection", (socket: Socket) => {
-            socket.join(ROOMS);
-
-            socket.on("identity", userId => {
+            socket.on("identity", async (userId: number, rooms: string[]) => {
                 this.users.push({
                     userId: userId,
                     socketId: socket.id,
                 });
+
+                socket.join(rooms);
             });
 
-            socket.on("message", async (message: IMessage, user: IUser) => {
+            socket.on("message", async (message: IMessage, userId: number) => {
+
+                const room: Room = await Room.findOne({
+                    where: { roomUuid: message.roomUuid }
+                });
+
+                console.log(message.message);
 
                 await Message.create({
                     message: message.message,
-                    roomId: message.roomId,
-                    userId: 
+                    roomId: room.id,
+                    userId: (await this.getUserBySocket(socket)).userId
                 });
 
-                socket.to(message.roomId).emit("message", message, user.userId)
+                socket.broadcast.to(message.roomUuid).emit("message", message, userId);
             });
 
             this.server.on("disconnect", () => {
@@ -44,7 +50,7 @@ export default class ServerSocket {
         this.server.use((socket, next) => {
             const token = socket.handshake.auth.token;
             console.log(token);
-            
+
             if (token == 400) {
                 socket.disconnect(true);
             }
@@ -56,12 +62,12 @@ export default class ServerSocket {
         });
     }
 
-    private async getUserBySocket(socket: Socket): IUser  {
+    private async getUserBySocket(socket: Socket): Promise<IUser> {
         return this.users.filter((user) => user.socketId === socket.id)[0];
     }
 
 
-    public listen(host: string, port: number) {
+    public listen(host: string, port: number): void {
         this.httpServer.listen(port, () => {
             console.log(`Server running on http://${host}:${port}`);
         })

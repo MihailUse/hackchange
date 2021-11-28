@@ -5,7 +5,7 @@ interface IServerToClientEvents {
 
 // for socket.on()
 interface IClientToServerEvents {
-    identity: (userId: number) => void;
+    identity: (userId: number, rooms: string[]) => void;
     message: (message: IMessage, user: IUser) => void;
     disconnect: () => void;
 }
@@ -23,5 +23,5 @@ interface IUser {
 
 interface IMessage {
     message: string
-    roomId: string
+    roomUuid: string
 }
