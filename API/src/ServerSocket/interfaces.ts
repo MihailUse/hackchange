@@ -22,8 +22,6 @@ interface IUser {
 }
 
 interface IMessage {
-    roomId: string
     message: string
-    author: number
-    sendAt: Date
+    roomId: string
 }

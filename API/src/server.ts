@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 
 import App from "./app";
+import RoomRouter from "./router/RoomRouter";
 import ToolRouter from "./router/ToolRouter";
 import UserRouter from "./router/UserRouter";
 import MessageRouter from "./router/MessageRouter";
@@ -24,7 +25,8 @@ app.routes([
     new ToolRouter("/tool"),
     new MessageRouter("/message"),
     new ReplyMessageRouter("/replyMessage"),
-    new PublicationRouter("/publication")
+    new PublicationRouter("/publication"),
+    new RoomRouter("/room")
 ]);
 
 app.listen();

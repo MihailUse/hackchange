@@ -27,9 +27,11 @@ export default class ServerSocket {
 
             socket.on("message", async (message: IMessage, user: IUser) => {
 
-                // await Message.create({
-                    
-                // })
+                await Message.create({
+                    message: message.message,
+                    roomId: message.roomId,
+                    userId: 
+                });
 
                 socket.to(message.roomId).emit("message", message, user.userId)
             });
@@ -53,6 +55,11 @@ export default class ServerSocket {
             });
         });
     }
+
+    private async getUserBySocket(socket: Socket): IUser  {
+        return this.users.filter((user) => user.socketId === socket.id)[0];
+    }
+
 
     public listen(host: string, port: number) {
         this.httpServer.listen(port, () => {
