@@ -52,25 +52,26 @@ export default class User extends Model<UserAttributes, UserInput> implements Us
     })
     avatar: string;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({
         type: DataTypes.STRING(256)
     })
     firstName: string;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({
         type: DataTypes.STRING(256)
     })
     middleName: string;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({
         type: DataTypes.STRING(256)
     })
     lastName: string;
 
     @AllowNull(false)
+    @Unique(true)
     @Column({
         type: DataTypes.STRING(256)
     })
