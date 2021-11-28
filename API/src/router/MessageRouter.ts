@@ -12,9 +12,27 @@ export default class MessageRouter extends BaseRouter {
     }
 
     private initRoutes(): void {
+        this.RegisterPostRoute("/getMessages", this.getMessages.bind(this), validateJWT);
+
         this.RegisterPostRoute("/create", this.create.bind(this), validateJWT);
         this.RegisterPostRoute("/edit", this.edit.bind(this), validateJWT);
         this.RegisterPostRoute("/delete", this.delete.bind(this), validateJWT);
+    }
+
+    private async getMessages(req: Request, res: Response): Promise<void> {
+        const { publicationId }: {
+            publicationId: number;
+        } = req.body;
+
+        if (!publicationId) {
+            throw new ApplicationError(HTTPStatus.BAD_REQUEST, "publicationId is required field");
+        }
+
+        const comments: Comment[] = await Comment.findAll({
+            where: { publicationId: publicationId }
+        });
+
+        res.json({ comments });
     }
 
     private async create(req: Request, res: Response): Promise<void> {

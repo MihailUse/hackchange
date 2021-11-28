@@ -4,6 +4,7 @@ import { HTTPStatus, validateJWT } from "../utils";
 import { ApplicationError } from "./ApplicationError";
 import User from "../database/models/User";
 import Publication from "../database/models/Publication";
+import Message from "../database/models/Message";
 
 
 export default class PublicationRouter extends BaseRouter {

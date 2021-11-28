@@ -6,6 +6,7 @@ import BaseRouter from "./BaseRouter";
 import User from "../database/models/User";
 import { HTTPStatus, validateJWT } from "../utils";
 import { ApplicationError } from "./ApplicationError";
+import Follow from "../database/models/Follow";
 
 
 export default class UserRouter extends BaseRouter {
@@ -21,6 +22,8 @@ export default class UserRouter extends BaseRouter {
         this.RegisterPostRoute("/get", this.getUser.bind(this), validateJWT);
         this.RegisterPostRoute("/edit", this.editUser.bind(this), validateJWT);
         this.RegisterPostRoute("/delete", this.deleteUser.bind(this), validateJWT);
+
+        this.RegisterPostRoute("/follow", this.followUser.bind(this), validateJWT);
     }
 
     private async singUp(req: Request, res: Response): Promise<void> {
@@ -148,6 +151,21 @@ export default class UserRouter extends BaseRouter {
     private async deleteUser(req: Request, res: Response): Promise<void> {
         const user: User = await User.findByPk(req.body.token.user.id);
         await user.destroy();
+
+        res.json({ message: "ok" });
+    }
+
+    private async followUser(req: Request, res: Response): Promise<void> {
+        const { userId } = req.body;
+
+        if (!userId) {
+            throw new ApplicationError(HTTPStatus.BAD_REQUEST, "userId is required field");
+        }
+
+        await Follow.create({
+            fromUserId: req.body.token.user.id,
+            toUserId: userId,
+        });
 
         res.json({ message: "ok" });
     }
