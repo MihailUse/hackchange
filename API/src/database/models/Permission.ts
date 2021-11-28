@@ -1,28 +1,26 @@
 import { DataTypes, Optional } from 'sequelize'
 import { AllowNull, BelongsTo, Column, ForeignKey, HasMany, PrimaryKey, Table, Unique, Model, HasOne } from 'sequelize-typescript';
-import Publication from './Publication';
+import RoomUser from './RoomUser';
 
 
-interface ToolAttributes {
+interface PermissionAttributes {
     id: number;
     name: string;
     description: string;
-    image?: string;
 }
 
-
-export interface ToolInput extends Optional<ToolAttributes, 'id'> { }
-export interface ToolOuput extends Required<ToolAttributes> { }
+export interface PermissionInput extends Optional<PermissionAttributes, 'id'> { }
+export interface PermissionOuput extends Required<PermissionAttributes> { }
 
 @Table({
     paranoid: false,
     timestamps: false,
     underscored: true,
     freezeTableName: true,
-    tableName: "tool",
-    modelName: "Tool"
+    tableName: "permission",
+    modelName: "Permission"
 })
-export default class Tool extends Model<ToolAttributes, ToolInput> implements ToolAttributes {
+export default class Permission extends Model<PermissionAttributes, PermissionInput> implements PermissionAttributes {
     
     @PrimaryKey
     @AllowNull(false)
@@ -39,18 +37,18 @@ export default class Tool extends Model<ToolAttributes, ToolInput> implements To
     })
     name: string;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({
         type: DataTypes.TEXT
     })
     description: string;
 
-    @AllowNull(true)
-    @Column({
-        type: DataTypes.TEXT
-    })
-    image: string;
 
-    @HasOne(() => Publication, "toolId")
-    publication: Publication;
+    @HasOne(() => RoomUser, "permissionId")
+    roomUser: RoomUser;
+
+    // timestamps
+    public readonly createdAt: Date;
+    public readonly updatedAt: Date;
+    public readonly deletedAt: Date;
 }

@@ -10,10 +10,9 @@ import ReplyComment from './ReplyComment';
 interface PublicationAttributes {
     id: number;
     image?: object;
-    title: string;
     message: string;
     onlineLink?: string;
-    
+
     userId: number;
     toolId: number;
 
@@ -52,13 +51,6 @@ export default class Publication extends Model<PublicationAttributes, Publicatio
     @AllowNull(false)
     @Unique(true)
     @Column({
-        type: DataTypes.STRING(256)
-    })
-    title: string;
-
-    @AllowNull(false)
-    @Unique(true)
-    @Column({
         type: DataTypes.TEXT
     })
     message: string;
@@ -66,7 +58,7 @@ export default class Publication extends Model<PublicationAttributes, Publicatio
     @AllowNull(false)
     @Unique(true)
     @Column({
-        type: DataTypes.STRING(256)
+        type: DataTypes.TEXT
     })
     onlineLink: string;
 

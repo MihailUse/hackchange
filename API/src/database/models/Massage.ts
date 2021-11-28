@@ -1,34 +1,35 @@
 import { DataTypes, Optional } from 'sequelize'
 import { AllowNull, BelongsTo, Column, ForeignKey, PrimaryKey, Table, Unique, Model } from 'sequelize-typescript';
-import Publication from './Publication';
+import Room from './Room';
 import User from './User';
 
 
-interface CommentAttributes {
+interface MassageAttributes {
     id: number;
-    massage: string;
+    message: string;
     
+    roomId: number;
     userId: number;
-    publicationId: number;
-
+    
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
 }
 
 
-export interface CommentInput extends Optional<CommentAttributes, 'id'> { }
-export interface CommentOuput extends Required<CommentAttributes> { }
+export interface MassageInput extends Optional<MassageAttributes, 'id'> { }
+export interface MassageOuput extends Required<MassageAttributes> { }
 
 @Table({
     paranoid: true,
     timestamps: true,
     underscored: true,
     freezeTableName: true,
-    tableName: "comment",
-    modelName: "Comment"
+    tableName: "massage",
+    modelName: "Massage"
 })
-export default class Comment extends Model<CommentAttributes, CommentInput> implements CommentAttributes {
+export default class Massage extends Model<MassageAttributes, MassageInput> implements MassageAttributes {
+    
     @PrimaryKey
     @AllowNull(false)
     @Column({
@@ -40,9 +41,16 @@ export default class Comment extends Model<CommentAttributes, CommentInput> impl
     @AllowNull(false)
     @Unique(true)
     @Column({
-        type: DataTypes.STRING(256)
+        type: DataTypes.TEXT
     })
-    massage: string;
+    message: string;
+
+    @ForeignKey(() => Room)
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.BIGINT
+    })
+    roomId: number;
 
     @ForeignKey(() => User)
     @AllowNull(false)
@@ -51,21 +59,13 @@ export default class Comment extends Model<CommentAttributes, CommentInput> impl
     })
     userId: number;
 
-    @ForeignKey(() => Publication)
-    @AllowNull(false)
-    @Column({
-        type: DataTypes.BIGINT
-    })
-    publicationId: number;
+ 
+    @BelongsTo(() => Room)
+    tool: Room;
 
     @BelongsTo(() => User)
     user: User;
 
-    @BelongsTo(() => Publication)
-    publication: Publication;
-
     // timestamps
-    public readonly createdAt: Date;
-    public readonly updatedAt: Date;
-    public readonly deletedAt: Date;
+    public readonly sendedAt: Date;
 }

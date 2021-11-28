@@ -1,5 +1,5 @@
 import { DataTypes, Optional } from 'sequelize'
-import { AllowNull, BelongsTo, Column, ForeignKey, HasMany, PrimaryKey, Table, Unique, Model } from 'sequelize-typescript';
+import { AllowNull, BelongsTo, Column, ForeignKey, PrimaryKey, Table, Model } from 'sequelize-typescript';
 import Publication from './Publication';
 import User from './User';
 

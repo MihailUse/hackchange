@@ -2,12 +2,15 @@ import { AllowNull, BelongsTo, Column, ForeignKey, HasMany, PrimaryKey, Table, U
 import { DataTypes, Optional } from 'sequelize'
 import Follow from './Follow';
 import Publication from './Publication';
+import RoomUser from './RoomUser';
 
 
 interface UserAttributes {
     id: number;
     avatar?: string;
-    name: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
     email: string;
     password: string;
     shortLink?: string;
@@ -34,6 +37,7 @@ export interface UserOuput extends Required<UserAttributes> { }
     modelName: "User",
 })
 export default class User extends Model<UserAttributes, UserInput> implements UserAttributes {
+    
     @PrimaryKey
     @AllowNull(false)
     @Column({
@@ -49,11 +53,22 @@ export default class User extends Model<UserAttributes, UserInput> implements Us
     avatar: string;
 
     @AllowNull(false)
-    @Unique(true)
     @Column({
         type: DataTypes.STRING(256)
     })
-    name: string;
+    firstName: string;
+
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
+    middleName: string;
+
+    @AllowNull(false)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
+    lastName: string;
 
     @AllowNull(false)
     @Column({
@@ -77,15 +92,14 @@ export default class User extends Model<UserAttributes, UserInput> implements Us
     @HasMany(() => Publication, "userId") //  { foreignKey: "userId" }
     publications: Publication[];
 
-    @HasMany(() => Follow, {
-        foreignKey: "fromUserId",
-    })
+    @HasMany(() => Follow, "fromUserId")
     following: Follow[];
 
-    @HasMany(() => Follow, {
-        foreignKey: "toUserId",
-    })
+    @HasMany(() => Follow, "toUserId")
     followers: Follow[];
+
+    @HasMany(() => RoomUser, "userId")
+    rooms: RoomUser[];
 
     // timestamps
     public readonly createdAt: Date;

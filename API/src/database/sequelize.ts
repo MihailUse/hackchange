@@ -3,12 +3,16 @@ import { Dialect } from "sequelize";
 import dotenv from "dotenv";
 
 import User from "./models/User";
-import Publication from "./models/Publication";
 import Tool from "./models/Tool";
-import ReplyComment from "./models/ReplyComment";
-import Comment from "./models/Comment";
 import Like from "./models/Like";
+import Room from "./models/Room";
 import Follow from "./models/Follow";
+import Comment from "./models/Comment";
+import Massage from "./models/Massage";
+import RoomUser from "./models/RoomUser";
+import Permission from "./models/Permission";
+import Publication from "./models/Publication";
+import ReplyComment from "./models/ReplyComment";
 
 dotenv.config();
 
@@ -26,7 +30,11 @@ const sequelizeDB = new Sequelize({
         Comment,
         ReplyComment,
         Like,
-        Follow
+        Follow,
+        RoomUser,
+        Room,
+        Permission,
+        Massage
     ],
 });
 
