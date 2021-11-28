@@ -8,12 +8,13 @@ import RoomUser from './RoomUser';
 interface UserAttributes {
     id: number;
     avatar?: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
+    firstName?: string;
+    middleName?: string;
+    lastName?: string;
     email: string;
     password: string;
     shortLink?: string;
+    brokerAccount?: string; 
 
     createdAt?: Date;
     updatedAt?: Date;
@@ -88,6 +89,12 @@ export default class User extends Model<UserAttributes, UserInput> implements Us
         type: DataTypes.STRING(256)
     })
     shortLink: string;
+
+    @AllowNull(true)
+    @Column({
+        type: DataTypes.STRING(256)
+    })
+    brokerAccount: string;
 
 
     @HasMany(() => Publication, "userId") //  { foreignKey: "userId" }
