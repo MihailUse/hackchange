@@ -23,7 +23,6 @@ export default class PublicationRouter extends BaseRouter {
     }
 
     private async getPublications(req: Request, res: Response): Promise<void> {
-
         const publication: Publication[] = await Publication.findAll({
             order: [
                 ['createdAt', 'ASC']

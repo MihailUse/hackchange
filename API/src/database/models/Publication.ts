@@ -55,7 +55,7 @@ export default class Publication extends Model<PublicationAttributes, Publicatio
     })
     message: string;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Unique(true)
     @Column({
         type: DataTypes.TEXT
