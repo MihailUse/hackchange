@@ -67,6 +67,12 @@ DB_PORT=5432
 
 ![jwtToken pic](https://miro.medium.com/max/2000/1*u3a-5xZDeudKrFGcxHzLew.png)
 
+Визуальное представление решения
+
+![regPic](./API/docs/registr.png)
+
+![logPic](./API/docs/log.png)
+
 ### Дизайн
 
 ### Профиль
