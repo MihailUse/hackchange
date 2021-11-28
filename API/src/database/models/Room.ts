@@ -6,7 +6,7 @@ import RoomUser from './RoomUser';
 
 interface RoomAttributes {
     id: number;
-    roomUuid: string;
+    roomUuid?: string;
     name: string;
     description: string;
 
