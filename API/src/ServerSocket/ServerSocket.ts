@@ -26,6 +26,9 @@ export default class ServerSocket {
             });
 
             socket.on("message", async (message: IMessage, userId: number) => {
+                console.log(message.roomUuid);
+                console.log(userId);
+                
 
                 const room: Room = await Room.findOne({
                     where: { roomUuid: message.roomUuid }
