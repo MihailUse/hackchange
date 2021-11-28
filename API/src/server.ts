@@ -9,7 +9,7 @@ import PublicationRouter from "./router/PublicationRouter";
 import ReplyMessageRouter from "./router/ReplyMessageRouter";
 
 
-const app = new App(process.env.NODE_HOST, process.env.NODE_PORT || 3040);
+const app = new App(process.env.NODE_HOST, process.env.NODE_PORT || "3040");
 
 app.middlewares([
     express.json({
